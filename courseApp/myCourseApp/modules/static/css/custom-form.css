@@ -1,0 +1,61 @@
+
+.custom-form {
+    max-width: 70%;
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f8f8f8;
+}
+
+.custom-form legend {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.custom-form .form-group {
+    margin-bottom: 20px;
+}
+
+.custom-form label {
+    display: block;
+    font-weight: bold;
+}
+
+.custom-form input[type="text"],
+.custom-form input[type="email"],
+.custom-form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.custom-form button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.custom-form .text-muted {
+    margin-top: 10px;
+}
+
+.custom-form .text-muted a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.custom-form button[type="submit"]:hover,
+.custom-form button[type="submit"]:focus {
+    background-color: #b3e0ff;
+}
