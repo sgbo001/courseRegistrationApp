@@ -3,11 +3,16 @@ from django.contrib import admin
 from django.urls import path
 from modules import views
 from users.views import register
+from users import views as user_views
+from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('about', views.about, name = 'about'),
-    path('register/', views.register, name='register')
+    path('register/', views.register, name='register'),
+    path('login', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
+
