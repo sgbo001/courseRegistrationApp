@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from datetime import datetime
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-
+from django.contrib import messages
 from users.models import Student
 from .forms import UserRegisterForm, UserProfileForm
 
