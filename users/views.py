@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 from users.models import Student
 from .forms import UserRegisterForm, UserProfileForm
@@ -40,4 +41,9 @@ def register(request):
         return render(request, 'register.html', {'form': form, 'profile_form': profile_form, 'title': 'Student Registration'})
 
 
-# Create your views here.
+@login_required
+def profile(request):
+    user = request.user
+    profile = user.student
+    context = {'user': user, 'profile': profile}
+    return render(request, 'profile.html', context)
