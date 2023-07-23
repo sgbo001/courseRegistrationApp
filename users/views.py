@@ -28,7 +28,7 @@ def register(request):
             
             # Save the department name
             selected_department = profile_form.cleaned_data['department']
-            profile.department = selected_department.name if selected_department else ''
+            profile.department = selected_department if selected_department else None
             profile.save()
             
             messages.success(request, f'Your account has been created! Now you can login!')

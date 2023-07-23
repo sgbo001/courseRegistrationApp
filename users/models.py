@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from modules.models import Course
 
 class Student(models.Model):
     user = models.OneToOneField(User, null = True, on_delete = models.CASCADE)
@@ -16,10 +17,12 @@ class Student(models.Model):
         ("football_team", "Your favorite football team"),
     ))
     secret_answer = models.CharField(default = '', max_length=50, blank=True)
-    department = models.CharField(default = '', max_length=50, blank=True)
+    department = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, blank=True)
     
-def __str__(self):
-    return f'{self.user.first_name} {self.user.last_name}'
+    def __str__(self):
+        if self.user:
+            return f'{self.user.first_name} {self.user.last_name}'
+        return f'Student ID: {self.pk}'
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

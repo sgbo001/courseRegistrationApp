@@ -2,6 +2,7 @@ from django import forms
 from .models import Student
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from modules.models import Course
 
 
 class UserRegisterForm(UserCreationForm):
@@ -12,10 +13,11 @@ class UserRegisterForm(UserCreationForm):
         
 class DepartmentChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, course):
-        return course.name
+        return course.group.name
+    
 class UserProfileForm(forms.ModelForm):
     date_of_birth = forms.DateField(input_formats=['%Y-%m-%d'], help_text='YYYY-mm-dd')
-    department = DepartmentChoiceField(queryset=Course.objects.only('name'))
+    department = DepartmentChoiceField(queryset=Course.objects.all())
 
     class Meta:
         model = Student

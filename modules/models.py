@@ -12,3 +12,19 @@ class Course(models.Model):
 
     def __str__(self):
         return self.group.name
+
+
+class Module(models.Model):
+    name = models.CharField(max_length=100)
+    code = models.CharField(max_length=20, unique=True)
+    credit = models.CharField(max_length=10)
+    category = models.CharField(max_length=250, choices=(
+        ("Compulsory", "Compulsory"),
+        ("Elective", "Elective"),
+    ))
+    description = models.TextField()
+    available = models.BooleanField()
+    courses = models.ManyToManyField(Course)
+    def __str__(self):
+        return self.name
+
