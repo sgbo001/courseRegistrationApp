@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
-from django.utils import timezone
 
 
 class Course(models.Model):
@@ -14,7 +13,6 @@ class Course(models.Model):
 
     def __str__(self):
         return self.group.name
-
 
 class Module(models.Model):
     name = models.CharField(max_length=100)
@@ -30,15 +28,10 @@ class Module(models.Model):
     def __str__(self):
         return self.name
     
-class Registration(models.Model):
-    """
-    Model representing a registration entry for a user in a particular course.
-    """
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    course = models.ForeignKey(Module, on_delete=models.CASCADE)
-    registration_date = models.DateTimeField(auto_now_add=True)
-    registered = models.BooleanField(default=False)
-
+class RegisteredUser(models.Model):
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    module_code = models.ForeignKey(Module, on_delete=models.CASCADE) 
+    registration_date = models.DateTimeField(default=timezone.now, editable=False)
+    
     def __str__(self):
-        return f"{self.user.username} registered for {self.course.name}"
-
+        return f"{self.student} - {self.module_code}"
