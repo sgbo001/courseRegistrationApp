@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import Group
 
+
 class Course(models.Model):
     group = models.OneToOneField(Group, on_delete=models.CASCADE)
     code = models.CharField(max_length=255, blank=True)
@@ -11,6 +12,7 @@ class Course(models.Model):
 
     def __str__(self):
         return self.group.name
+
 
 class Module(models.Model):
     name = models.CharField(max_length=100)
@@ -25,3 +27,4 @@ class Module(models.Model):
     courses = models.ManyToManyField(Course)
     def __str__(self):
         return self.name
+
