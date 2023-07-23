@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import Group
+from django.contrib.auth.models import User
+from django.utils import timezone
 
 
 class Course(models.Model):
@@ -27,4 +29,16 @@ class Module(models.Model):
     courses = models.ManyToManyField(Course)
     def __str__(self):
         return self.name
+    
+class Registration(models.Model):
+    """
+    Model representing a registration entry for a user in a particular course.
+    """
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    course = models.ForeignKey(Module, on_delete=models.CASCADE)
+    registration_date = models.DateTimeField(auto_now_add=True)
+    registered = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.user.username} registered for {self.course.name}"
 
