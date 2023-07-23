@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import Group
+from django.contrib.auth.models import User
 
 
 class Course(models.Model):
@@ -12,7 +13,6 @@ class Course(models.Model):
 
     def __str__(self):
         return self.group.name
-
 
 class Module(models.Model):
     name = models.CharField(max_length=100)
@@ -27,4 +27,11 @@ class Module(models.Model):
     courses = models.ManyToManyField(Course)
     def __str__(self):
         return self.name
-
+    
+class RegisteredUser(models.Model):
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    module_code = models.ForeignKey(Module, on_delete=models.CASCADE) 
+    registration_date = models.DateTimeField(default=timezone.now, editable=False)
+    
+    def __str__(self):
+        return f"{self.student} - {self.module_code}"
