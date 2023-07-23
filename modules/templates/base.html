@@ -33,7 +33,7 @@
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-      <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard " target="_blank">
+      <a class="navbar-brand m-0" href="#" target="_blank">
         <img src="{% static 'img/shu.png' %}" alt="Moodle Registration System" class="ms-1 font-weight-bold"><span class="ms-1 font-weight-bold text-white"> SHU Registration App</span>
       </a>
     </div>
@@ -56,14 +56,7 @@
             <span class="nav-link-text ms-1">My Modules</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link text-white " href="#">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Time Table</span>
-          </a>
-        </li>
+        
         <li class="nav-item">
           <a class="nav-link text-white " href="#">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -93,7 +86,7 @@
         </li>
         <li class="nav-item">
           {%if user.is_authenticated%}
-          <a class="nav-link text-white " href="#">
+          <a class="nav-link text-white "href="{% url 'logout' %}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10"></i>
             </div>
@@ -168,7 +161,7 @@
             </li>
           {% else %}
             <li class="nav-item d-flex align-items-center">
-              <a href="#" class="nav-link text-body font-weight-bold px-0">
+              <a href="{% url 'login' %}" class="nav-link text-body font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
                 <span class="d-sm-inline d-none">Sign In</span>
               </a>
@@ -179,7 +172,7 @@
             {% if user.is_authenticated%}
             
               {%else%}
-              <a href="#" class="nav-link text-body font-weight-bold px-0">
+              <a href="{% url 'register' %}" class="nav-link text-body font-weight-bold px-0">
                 &nbsp;&nbsp; <i class="fa fa-user me-sm-1"></i>
                 <span class="d-sm-inline d-none">Register</span>
               </a>
@@ -223,12 +216,6 @@
   
   </div>
   <!--   Core JS Files   -->
-  <script src="../assets/js/core/popper.min.js"></script>
-  <script src="../assets/js/core/bootstrap.min.js"></script>
-  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
-  <script src="../assets/js/plugins/chartjs.min.js"></script>
-  
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -240,8 +227,7 @@
   </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../assets/js/material-dashboard.min.js?v=3.1.0"></script>
+
 </body>
 
 </html>
