@@ -32,3 +32,43 @@ def course_list(request):
     except Course.DoesNotExist:
         # Handle error case if no courses are found
         return render(request, 'error.html', {'message': 'No courses found'})
+
+def module_list(request):
+    course_name = request.GET.get('course_name')
+
+    try:
+        # Filter the modules based on the provided course_name
+        filtered_modules = Course.objects.filter(group__name=course_name)
+
+        # Create a list to store module information
+        module_info = []
+
+        # Iterate over the filtered modules and extract the relevant information
+        for module in filtered_modules:
+            course_name = module.module.name
+            course_code = module.module.code
+            credit = module.module.credit
+            category = module.module.category
+            available = module.module.available
+            description = module.module.description
+            #course_title = module.name.name.all()
+
+            # Create a dictionary with the module information
+            module_data = {
+                'course_name': course_name,
+                'course_code': course_code,
+                'credit': credit,
+                'category': category,
+                'available': available,
+                'description': description,
+                #'course_title': course_title
+            }
+
+            # Append the module data to the list
+            module_info.append(module_data)
+
+        # Pass the module information to the template
+        return render(request, 'module_list.html', {'modules': module_info})
+    except Module.DoesNotExist:
+        # Handle error case if no modules are found
+        return render(request, 'error.html', {'message': 'No modules found'})
