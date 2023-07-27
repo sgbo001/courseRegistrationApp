@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Course
+from .models import Course, Module
 
 def about(request):
     return render(request, 'about.html')
@@ -38,19 +38,19 @@ def module_list(request):
 
     try:
         # Filter the modules based on the provided course_name
-        filtered_modules = Course.objects.filter(group__name=course_name)
+        filtered_modules = Module.objects.filter(courses__group__name=course_name)
 
         # Create a list to store module information
         module_info = []
 
         # Iterate over the filtered modules and extract the relevant information
         for module in filtered_modules:
-            course_name = module.module.name
-            course_code = module.module.code
-            credit = module.module.credit
-            category = module.module.category
-            available = module.module.available
-            description = module.module.description
+            course_name = module.name
+            course_code = module.code
+            credit = module.credit
+            category = module.category
+            available = module.available
+            description = module.description
             #course_title = module.name.name.all()
 
             # Create a dictionary with the module information
