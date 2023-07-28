@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Course, Module
+from .models import Course, Module, CourseModule
 
 def about(request):
     return render(request, 'about.html')
@@ -72,3 +72,5 @@ def module_list(request):
     except Module.DoesNotExist:
         # Handle error case if no modules are found
         return render(request, 'error.html', {'message': 'No modules found'})
+    
+    
