@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
 from django.utils import timezone
-from .models import Course, Module
 
 class Course(models.Model):
     group = models.OneToOneField(Group, on_delete=models.CASCADE)
@@ -28,13 +27,6 @@ class Module(models.Model):
     courses = models.ManyToManyField(Course)
     def __str__(self):
         return self.name
-    
-class CourseModule(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    module = models.ForeignKey(Module, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f"{self.course} - {self.module}"
     
 class RegisteredUser(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)
