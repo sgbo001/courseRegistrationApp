@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Course, Module, RegisteredUser
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 def about(request):
     return render(request, 'about.html')
@@ -80,19 +81,19 @@ def module_detail(request):
 
     try:
         # Filter the modules based on the provided course_code
-        filtered_modules = Module.objects.filter(module__code=course_code)
+        filtered_modules = Module.objects.filter(code=course_code)
 
         # Create a list to store module information
         module_info = []
 
         # Iterate over the filtered modules and extract the relevant information
         for module in filtered_modules:
-            course_name = module.course
-            course_code = module.module.code
-            credit = module.module.credit
-            category = module.module.category
-            available = module.module.available
-            description = module.module.description
+            course_name = module.name
+            course_code = module.code
+            credit = module.credit
+            category = module.category
+            available = module.available
+            description = module.description
 
             # Create a dictionary with the module information
             module_data = {
@@ -146,3 +147,47 @@ def module_detail(request):
         return render(request, 'error.html', {'message': 'No users found'})
 
 
+@login_required
+def register_module(request, module_code):
+    # Get the user and module based on the current user and module code
+    user = request.user
+    course_name = request.GET.get('course_name')
+    try:
+        # Get the module based on the module_code and course_name
+        module = get_object_or_404(Module, code=module_code)
+        course = get_object_or_404(Course, group__name=course_name)
+        
+        # Create a new Module object and save it to the database
+        course_module = Module(name=course, code=module)
+        
+        
+        # Create a new RegisteredUser object and save it to the database
+        registered_user = RegisteredUser(student=user, module_code=course_module.code)
+        registered_user.save()
+        
+        # Redirect to the module detail page or any other desired page
+        messages.success(request, f'You have registered for this module successfully')
+        return redirect('#')  # Replace 'my_module' with the appropriate URL name
+
+    except (Module.DoesNotExist, Course.DoesNotExist):
+        # Handle the case when the module or course does not exist
+        return render(request, 'module_not_found.html')
+    
+@login_required
+def unregister_module(request, module_code):
+    # Get the user and module based on the current user and module code
+    user = request.user
+    course_code = request.GET.get('course_code')
+    try:
+        # Get the registered user for the module
+        registered_user = RegisteredUser.objects.get(student=user, module_code__code=course_code)
+        
+        # Delete the registered user
+        registered_user.delete()
+        messages.warning(request, f'You have un-registered from this module')
+        # Redirect to the module detail page or any other desired page
+        return redirect('#')  # Replace 'my_module' with the appropriate URL name
+
+    except (Module.DoesNotExist, RegisteredUser.DoesNotExist):
+        # Handle the case when the module or registered user does not exist
+        return render(request, 'module_not_found.html')
