@@ -1,5 +1,6 @@
-from django.shortcuts import render
-from .models import Course, Module
+from django.shortcuts import render, get_object_or_404
+from .models import Course, Module, RegisteredUser
+from django.contrib.auth.decorators import login_required
 
 def about(request):
     return render(request, 'about.html')
@@ -72,3 +73,76 @@ def module_list(request):
     except Module.DoesNotExist:
         # Handle error case if no modules are found
         return render(request, 'error.html', {'message': 'No modules found'})
+    
+@login_required
+def module_detail(request):
+    course_code = request.GET.get('course_code')
+
+    try:
+        # Filter the modules based on the provided course_code
+        filtered_modules = Module.objects.filter(module__code=course_code)
+
+        # Create a list to store module information
+        module_info = []
+
+        # Iterate over the filtered modules and extract the relevant information
+        for module in filtered_modules:
+            course_name = module.course
+            course_code = module.module.code
+            credit = module.module.credit
+            category = module.module.category
+            available = module.module.available
+            description = module.module.description
+
+            # Create a dictionary with the module information
+            module_data = {
+                'course_name': course_name,
+                'course_code': course_code,
+                'credit': credit,
+                'category': category,
+                'available': available,
+                'description': description,
+            }
+
+            # Append the module data to the list
+            module_info.append(module_data)
+
+        # Filter the registered users based on the provided course_code
+        registered_users = RegisteredUser.objects.filter(module_code__code=course_code)
+
+        # Create a list to store user information
+        user_info = []
+
+        # Iterate over the filtered users and extract the relevant information
+        for registered_user in registered_users:
+            student = registered_user.student
+            registration_date = registered_user.registration_date
+
+            # Create a dictionary with the user information
+            user_data = {
+                'student': student,
+                'registration_date': registration_date,
+            }
+
+            # Append the user data to the list
+            user_info.append(user_data)
+
+        # Check if the user is a registered student for the module
+        is_registered = RegisteredUser.objects.filter(student=request.user, module_code__code=course_code).exists()
+
+        # Pass the module and user information to the template
+        context = {
+            'modules': module_info,
+            'users': user_info,
+            'is_registered': is_registered,
+        }
+        return render(request, 'module_detail.html', context)
+
+    except Module.DoesNotExist:
+        # Handle error case if no modules are found
+        return render(request, 'error.html', {'message': 'No modules found'})
+    except RegisteredUser.DoesNotExist:
+        # Handle error case if no users are found
+        return render(request, 'error.html', {'message': 'No users found'})
+
+
