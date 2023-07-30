@@ -16,6 +16,7 @@ urlpatterns = [
     path('logout', auth_views.LogoutView.as_view(template_name = 'logout.html'), name='logout'),
     path('profile', user_views.profile, name = 'profile'),
     path('courses/', include('modules.urls')),
+    path('password-reset/', user_views.password_reset_view, name='password_reset'),
 
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
