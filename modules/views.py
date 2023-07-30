@@ -167,7 +167,7 @@ def register_module(request, module_code):
         
         # Redirect to the module detail page or any other desired page
         messages.success(request, f'You have registered for this module successfully')
-        return redirect('#')  # Replace 'my_module' with the appropriate URL name
+        return redirect('modules:my_module')  # Replace 'my_module' with the appropriate URL name
 
     except (Module.DoesNotExist, Course.DoesNotExist):
         # Handle the case when the module or course does not exist
@@ -186,8 +186,19 @@ def unregister_module(request, module_code):
         registered_user.delete()
         messages.warning(request, f'You have un-registered from this module')
         # Redirect to the module detail page or any other desired page
-        return redirect('#')  # Replace 'my_module' with the appropriate URL name
+        return redirect('modules:my_module')  # Replace 'my_module' with the appropriate URL name
 
     except (Module.DoesNotExist, RegisteredUser.DoesNotExist):
         # Handle the case when the module or registered user does not exist
         return render(request, 'module_not_found.html')
+
+def my_module(request):
+    student_name = request.user  # Replace with the actual student name
+
+    # Query the RegisteredUser model to filter by student name
+    registered_users = RegisteredUser.objects.filter(student__username=student_name)
+
+    # Query the Module model to retrieve the corresponding module information
+    modules = Module.objects.filter(pk__in=registered_users.values_list('module_code', flat=True))
+
+    return render(request, 'myModule.html', {'modules': modules})
