@@ -22,3 +22,31 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = Student
         fields = ['image', 'date_of_birth', 'address', 'city', 'country', 'department', 'secret_question', 'secret_answer']
+
+class PasswordResetForm(forms.Form):
+    email = forms.EmailField(label='Email')
+    secret_answer = forms.CharField(label='Secret Answer')
+    password = forms.CharField(label='New Password', widget=forms.PasswordInput)
+    confirm_password = forms.CharField(label='Confirm New Password', widget=forms.PasswordInput)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        confirm_password = cleaned_data.get('confirm_password')
+
+        if password and confirm_password and password != confirm_password:
+            raise forms.ValidationError("Passwords do not match.")
+
+        email = cleaned_data.get('email')
+        secret_answer = cleaned_data.get('secret_answer')
+
+        try:
+            user = User.objects.get(email=email)
+            profile = user.student
+            if profile.secret_answer != secret_answer:
+                raise forms.ValidationError("Invalid secret answer.")
+            cleaned_data['user'] = user
+        except User.DoesNotExist:
+            raise forms.ValidationError("Invalid email.")
+
+        return cleaned_data

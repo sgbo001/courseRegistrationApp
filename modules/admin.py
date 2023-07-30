@@ -6,4 +6,6 @@ admin.site.register(Course)
 admin.site.register(Module)
 admin.site.register(RegisteredUser)
 
+admin.site.site_header = 'SHU App Admin'
+
 
