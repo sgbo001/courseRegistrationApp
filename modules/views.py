@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Course, Module, RegisteredUser
+from .models import Course, Module, RegisteredUser, Learning
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
@@ -202,3 +202,35 @@ def my_module(request):
     modules = Module.objects.filter(pk__in=registered_users.values_list('module_code', flat=True))
 
     return render(request, 'myModule.html', {'modules': modules})
+
+def learning_list(request):
+    course_code = request.GET.get('course_code')
+
+    try:
+        # Filter the learnings based on the provided course_code
+        filtered_learnings = Learning.objects.filter(module__code=course_code)
+
+        # Create a list to store learning information
+        learning_info = []
+
+        # Iterate over the filtered learnings and extract the relevant information
+        for learning in filtered_learnings:
+            title = learning.title
+            files = learning.files
+            description = learning.description
+
+            # Create a dictionary with the learning information
+            learning_data = {
+                'title': title,
+                'files': files,
+                'description': description,
+            }
+
+            # Append the learning data to the list
+            learning_info.append(learning_data)
+
+        # Pass the learning information to the template
+        return render(request, 'learning_list.html', {'learnings': learning_info})
+    except Learning.DoesNotExist:
+        # Handle error case if no learnings are found
+        return render(request, 'error.html', {'message': 'No learning material found'})

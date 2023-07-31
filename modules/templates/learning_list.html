@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  .course-module {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f5f5f5;
+  }
+  
+  .course-module h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 5px;
+  }
+  
+  .course-module p {
+    font-size: 14px;
+    margin: 0;
+  }
+  
+  .course-module .description {
+    font-style: italic;
+  }
+  
+  .course-module .courses {
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  .course-module .course-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+  
+  .course-module .course-list li {
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+  
+  .course-module .course-list li:before {
+    content: "\2022";
+    color: #555;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+  }
+  </style>
+  <h4>Browse Learning Material - {{ request.GET.course_code }}</h4>
+  {% for learning in learnings %}
+  <div class="course-module">
+      <p><strong>Title:</strong> {{ learning.title }} <br>
+      <p><strong>Attachment:</strong> <a style = "color:blue" href="{{ learning.files.url }}">{{ learning.files.name }}</a></p><br>
+      <p><strong>Description:</strong> {{ learning.description }}</p>
+      <br></div>
+     
+{% endfor %}
+{% endblock %}
