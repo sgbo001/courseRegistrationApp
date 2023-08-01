@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from users.models import Student, User
-from .forms import UserRegisterForm, UserProfileForm, PasswordResetForm
+from .forms import UserRegisterForm, UserProfileForm, PasswordResetForm, ProfileEditForm
 from django import forms
 
 
@@ -72,3 +72,17 @@ def password_reset_view(request):
     else:
         form = PasswordResetForm()
     return render(request, 'password_reset.html', {'form': form})
+
+def edit_profile(request):
+    profile = request.user.student
+
+    if request.method == 'POST':
+        form = ProfileEditForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Profile updated successfully!')
+            return redirect('profile')  # Redirect to the updated profile page
+    else:
+        form = ProfileEditForm(instance=profile)
+
+    return render(request, 'edit_profile.html', {'form': form})

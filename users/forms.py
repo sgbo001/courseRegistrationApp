@@ -3,6 +3,7 @@ from .models import Student
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from modules.models import Course
+from .models import Student
 
 
 class UserRegisterForm(UserCreationForm):
@@ -50,3 +51,8 @@ class PasswordResetForm(forms.Form):
             raise forms.ValidationError("Invalid email.")
 
         return cleaned_data
+    
+class ProfileEditForm(forms.ModelForm):
+    class Meta:
+        model = Student
+        fields = ['image', 'date_of_birth', 'address', 'city', 'country', 'department', 'secret_question', 'secret_answer']
