@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<link rel="stylesheet" href="\static\css\custom-form.css">
+  <h4>Edit Profile - {{ user.first_name }} {{ user.last_name }}</h4>
+  <form method="post" class="custom-form" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+  </form>
+{% endblock %}
