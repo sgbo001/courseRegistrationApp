@@ -12,5 +12,6 @@ urlpatterns = [
     path('register_module/<str:module_code>/', views.register_module, name='register_module'),
     path('my_module/', my_module, name='my_module'),
     path('learning_list/', views.learning_list, name='learning_list'),
+    path('contact', views.contact, name = 'contact'),
 
 ]
