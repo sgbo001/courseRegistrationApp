@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Course, Module, RegisteredUser, Learning
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from .forms import ContactForm
+from django.core.mail import send_mail
 
 def about(request):
     return render(request, 'about.html')
@@ -234,3 +236,31 @@ def learning_list(request):
     except Learning.DoesNotExist:
         # Handle error case if no learnings are found
         return render(request, 'error.html', {'message': 'No learning material found'})
+
+def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+
+            # Compose the email message
+            email_subject = f"Contact Form Submission - {subject}"
+            email_body = f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}"
+
+            # Send the email using Django's send_mail function
+            send_mail(
+                email_subject,
+                email_body,
+                'sample@gmail.com',  # Replace this with your own email address
+                ['sample@gmail.com'],  # Add your Gmail account here
+                fail_silently=False,
+            )
+
+            messages.success(request, 'Thank you for contacting us. We will get back to you shortly.')
+            return redirect('./')
+    else:
+        form = ContactForm()
+    return render(request, 'contact.html', {'form': form})
