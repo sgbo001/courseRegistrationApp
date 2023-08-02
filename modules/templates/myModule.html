@@ -60,7 +60,7 @@
         <p>Category: {{ module.category }}</p>
         <p>Description: {{ module.description }}</p>
         <br>
-        <a href="#"  style="color: Blue;">Browse Learning Materials</a></div>
+        <a href="{% url 'modules:learning_list' %}?course_code={{ module.code }}"  style="color: Blue;">Browse Learning Materials</a></div>
     {% empty %}
         <p>No modules found.</p>
     {% endfor %}
