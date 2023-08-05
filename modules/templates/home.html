@@ -1,23 +1,42 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h5>Browse Courses </h5><br>
-{% for course in courses %}
+<h5>Browse Courses</h5><br>
+{% for course in page_obj %}
 <div class="col-lg-4 col-md-6 mt-4 mb-4">
     <div class="card z-index-2">
       <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
         <div class="#">
           <div class="chart" style="display: flex; justify-content: center; align-items: center; height: 190px;">
-            <img class="chart-canvas" src="{{ course.course_image.url }}" height="200" width="300" >
-          </div>
-         </div>
+            <img class="chart-canvas" src="{{ course.image.url }}" height="200" width="300" alt="Course Image">
+        </div>
+      </div>
       </div>
       <div class="card-body" style="max-height: 10px; overflow: fixed;">
         <ul class="course-list" style="justify-content: center;">
-            <li><a href="{% url 'modules:module_list' %}?course_name={{ course.course_name }}">{{ course.course_name }}</a></li>
+            <li><a href="{% url 'modules:module_list' %}?course_name={{ course.group.name }}">{{ course.group.name }}</a></li>
         </ul>
     </div>
     </div>
   </div>
 {% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; First</a>
+            <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
 {% endblock %}
