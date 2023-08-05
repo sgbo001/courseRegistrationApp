@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import ContactForm
 from django.core.mail import send_mail
+from django.core.paginator import Paginator
 
 def about(request):
     return render(request, 'about.html')
@@ -13,25 +14,15 @@ def course_list(request):
         # Get all courses
         courses = Course.objects.all()
         
-        # Create a list to store course information
-        course_info = []
+        # Paginate the courses
+        items_per_page = 6
+        paginator = Paginator(courses, items_per_page)
         
-        # Iterate over the courses and extract the relevant information
-        for course in courses:
-            course_name = course.group.name
-            course_image = course.image
-            
-            # Create a dictionary with the course information
-            course_data = {
-                'course_name': course_name,
-                'course_image': course_image,
-            }
-            
-            # Append the course data to the list
-            course_info.append(course_data)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
         
-        # Pass the course information to the template
-        return render(request, 'home.html', {'courses': course_info})
+        # Pass the paginated courses to the template
+        return render(request, 'home.html', {'page_obj': page_obj})
     
     except Course.DoesNotExist:
         # Handle error case if no courses are found
