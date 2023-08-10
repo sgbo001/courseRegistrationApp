@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-o5*+)0l)h-$fzbbksxhu8bpsva7$d0j-6p+oqh-c($25+p97iv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['c2063081.azurewebsites.net']
 
 
 # Application definition
@@ -79,8 +79,13 @@ WSGI_APPLICATION = 'myCourseApp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'moduleapp',
+        'USER': 'c2063081',     
+        'PASSWORD': 'June0620@', 
+        'HOST': 'c2063081.mysql.database.azure.com',  
+        'PORT': '3306',                
+        
     }
 }
 
