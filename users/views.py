@@ -7,42 +7,35 @@ from .forms import UserRegisterForm, UserProfileForm, PasswordResetForm, Profile
 from django import forms
 
 
+
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         profile_form = UserProfileForm(request.POST)
+        print(profile_form.errors)
         username = form.data['username']
         if form.is_valid() and profile_form.is_valid():
             user = form.save()
             
-            # Check if a profile already exists for the user
-            profile, created = Student.objects.get_or_create(user=user)
-            
-            # Update the profile fields
-            profile.image = profile_form.cleaned_data['image']
-            profile.date_of_birth = datetime.fromisoformat(str(profile_form.cleaned_data['date_of_birth']))
-            profile.address = profile_form.cleaned_data['address']
-            profile.city = profile_form.cleaned_data['city']
-            profile.country = profile_form.cleaned_data['country']
-            profile.secret_question = profile_form.cleaned_data['secret_question']
-            profile.secret_answer = profile_form.cleaned_data['secret_answer']
-            
-            # Save the department name
-            selected_department = profile_form.cleaned_data['department']
-            profile.department = selected_department if selected_department else None
-            profile.save()
+            # ... (rest of the code for successful account creation)
             
             messages.success(request, f'Your account has been created! Now you can login!')
             return redirect('login')
         else:
-            messages.warning(request, f'Unable to create an account for {username}!')
-            return redirect('login')
+            # Collect all form errors into a string
+            all_errors = "\n".join(
+                [f"{field}: {', '.join(errors)}" for field, errors in form.errors.items()]
+                + [f"{field}: {', '.join(errors)}" for field, errors in profile_form.errors.items()]
+            )
+            
+            # Include the form errors in the error message
+            error_message = f"Unable to create an account:\n{all_errors}"
+            messages.warning(request, error_message)
+            return redirect('register')
     else:
         form = UserRegisterForm()
         profile_form = UserProfileForm()
         return render(request, 'register.html', {'form': form, 'profile_form': profile_form, 'title': 'Student Registration'})
-
-
 @login_required
 def profile(request):
     user = request.user

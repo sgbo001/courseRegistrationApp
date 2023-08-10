@@ -60,7 +60,10 @@
         <p>Category: {{ module.category }}</p>
         <p>Description: {{ module.description }}</p>
         <br>
-        <a href="{% url 'modules:learning_list' %}?course_code={{ module.code }}"  style="color: Blue;">Browse Learning Materials</a></div>
+        <a href="{% url 'modules:learning_list' %}?course_code={{ module.code }}"  style="color: Blue;">Browse Learning Materials</a>
+      <br>
+      <a href="{% url 'modules:unregister_module' module.code %}?course_code={{ module.code }}&course_name={{ request.GET.course_name }}" class="unregister-button" style="color: red;">Unregister</a>
+    </div>
     {% empty %}
         <p>No modules found.</p>
     {% endfor %}
