@@ -132,9 +132,25 @@
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
   <div class="ms-md-auto pe-md-3 d-flex align-items-center">
     <div class="input-group input-group-outline">
-      <label class="form-label">Type here...</label>
-      <input type="text" class="form-control">
+      <form method="get" action="{% url 'modules:search_course' %}">
+      <label for="inputField" class="form-label" id="labelField">Search for Course</label>
+      <input type="text" id="inputField" class="form-control"  oninput="handleInput()" name="q" value="{{ query }}">
+
+      </form>
     </div>
+    
+    <script>
+    function handleInput() {
+      const inputField = document.getElementById('inputField');
+      const labelField = document.getElementById('labelField');
+      
+      if (inputField.value !== '') {
+        labelField.style.display = 'none';
+      } else {
+        labelField.style.display = 'block';
+      }
+    }
+    </script>
   </div>
           <ul class="navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
