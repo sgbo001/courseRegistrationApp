@@ -255,3 +255,12 @@ def contact(request):
     else:
         form = ContactForm()
     return render(request, 'contact.html', {'form': form})
+
+def search_course(request):
+    query = request.GET.get('q')
+    courses = None
+
+    if query:
+        courses = Course.objects.filter(group__name__icontains=query)
+    
+    return render(request, 'search_course.html', {'courses': courses, 'query': query})

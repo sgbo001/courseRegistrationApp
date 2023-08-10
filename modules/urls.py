@@ -13,5 +13,6 @@ urlpatterns = [
     path('my_module/', my_module, name='my_module'),
     path('learning_list/', views.learning_list, name='learning_list'),
     path('contact', views.contact, name = 'contact'),
+    path('search_course/', views.search_course, name='search_course'),
 
 ]
