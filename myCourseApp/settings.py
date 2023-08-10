@@ -85,7 +85,11 @@ DATABASES = {
         'PASSWORD': 'June0620@', 
         'HOST': 'c2063081.mysql.database.azure.com',  
         'PORT': '3306',                
-        
+        'OPTIONS': {
+            'ssl': {
+                'ca': 'DigiCertGlobalRootCA.crt.pem',  # Path to your CA certificate file
+            },
+        },
     }
 }
 
