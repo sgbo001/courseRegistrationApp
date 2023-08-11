@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'modules.apps.ModulesConfig',
     'users.apps.UsersConfig',
+    'storages',
     
     
 ]
@@ -127,23 +128,16 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Azure Blob Storage configurations
-AZURE_ACCOUNT_NAME = 'c2063081'
-AZURE_ACCOUNT_KEY = 'Ce8GO0ugoRfwDfGgE12t9gmwdJt7fUQquK00mQD57Xm00PSMSBY1jJwAel5dqDaWjp3nJ3b1SjVd+AStLO6D1A=='
-AZURE_MEDIA_CONTAINER = 'media'
-AZURE_STATIC_CONTAINER = 'static'
-
-
-# Static files (CSS, JavaScript, Images)
-STATIC_URL = 'https://' + AZURE_ACCOUNT_NAME + '.blob.core.windows.net/' + AZURE_STATIC_CONTAINER + '/'
+DEFAULT_FILE_STORAGE = 'myCourseApp.storage.AzureMediaStorage'
 STATICFILES_STORAGE = 'myCourseApp.storage.AzureStaticStorage'
 
-# Use Azure Blob Storage for serving media files
-MEDIA_ROOT = BASE_DIR / 'media'
-MEDIA_URL = 'https://' + AZURE_ACCOUNT_NAME + '.blob.core.windows.net/' + AZURE_MEDIA_CONTAINER + '/'
-DEFAULT_FILE_STORAGE = 'myCourseApp.storage.AzureMediaStorage'
+STATIC_LOCATION = "static"
+MEDIA_LOCATION = "media"
 
-
+AZURE_ACCOUNT_NAME = "c2063081"
+AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
+STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
+MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
