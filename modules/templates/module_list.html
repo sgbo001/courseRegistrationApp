@@ -59,7 +59,8 @@
         <p>Credit: {{ module.credit }}</p>
         <p>Category: {{ module.category }}</p>
         <p>Available: {{ module.available }}</p>
-        <br>
+        <p>Click<a href="{% url 'modules:module_detail' %}?course_code={{ module.course_code }}&course_name={{ request.GET.course_name }}"  style="color: Blue;"> <strong> HERE</strong></a> to register/Unregister for this module </p>
+        
     </div>
     {% empty %}
         <p>No modules found.</p>

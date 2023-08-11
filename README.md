@@ -6,7 +6,7 @@ The Course-Module application is an application that facilitate various aspects 
 
 # Development Environment
 
-<https://github.com/sgbo001/courseRegistrationApp.git>
+<https://c2063081.azurewebsites.net/>
 
 # Features
 

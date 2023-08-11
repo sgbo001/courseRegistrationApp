@@ -6,9 +6,11 @@ from users import views as user_views
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
+from modules.views import course_list
 
 
 urlpatterns = [
+    path('', course_list, name = 'home'),
     path('admin/', admin.site.urls),
     path('about', views.about, name = 'about'),
     path('register', user_views.register, name='register'),
