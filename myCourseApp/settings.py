@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-from azure.storage.blob import AzureBlobStorage
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
