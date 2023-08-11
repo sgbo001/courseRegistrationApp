@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-from storages.backends.azure_storage import AzureMediaStorage
+from azure.storage.blob import AzureBlobStorage
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -126,17 +127,22 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
+# Azure Blob Storage configurations
+AZURE_ACCOUNT_NAME = 'c2063081'
+AZURE_ACCOUNT_KEY = 'Ce8GO0ugoRfwDfGgE12t9gmwdJt7fUQquK00mQD57Xm00PSMSBY1jJwAel5dqDaWjp3nJ3b1SjVd+AStLO6D1A=='
+AZURE_MEDIA_CONTAINER = 'media'
+AZURE_STATIC_CONTAINER = 'static'
 
-# Use Azure Blob Storage for serving static files
-STATIC_URL = 'https://c2063081.blob.core.windows.net/static/'
-STATICFILES_STORAGE = 'myCourseApp.storage.AzureMediaStorage'
+
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = 'https://' + AZURE_ACCOUNT_NAME + '.blob.core.windows.net/' + AZURE_STATIC_CONTAINER + '/'
+STATICFILES_STORAGE = 'myCourseApp.storage.AzureStaticStorage'
 
 # Use Azure Blob Storage for serving media files
 MEDIA_ROOT = BASE_DIR / 'media'
-MEDIA_URL = 'https://c2063081.blob.core.windows.net/media/'
+MEDIA_URL = 'https://' + AZURE_ACCOUNT_NAME + '.blob.core.windows.net/' + AZURE_MEDIA_CONTAINER + '/'
 DEFAULT_FILE_STORAGE = 'myCourseApp.storage.AzureMediaStorage'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
