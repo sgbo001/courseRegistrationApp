@@ -6,7 +6,27 @@ The Course-Module application is an application that facilitate various aspects 
 
 # Development Environment
 
-<https://c2063081.azurewebsites.net/>
+Home Page : <https://c2063081.azurewebsites.net/>
+
+Admin Page : <https://c2063081.azurewebsites.net/admin/>
+
+Admin Username : c2063081
+
+Password : newJune1234@
+
+# Environment Variables
+
+AZURE_DB_NAME='moduleapp'
+
+AZURE_DB_HOST='c2063081.mysql.database.azure.com'
+
+AZURE_DB_PORT='3306'
+
+AZURE_DB_USER='c2063081'
+
+AZURE_DB_PASSWORD='June0620@'
+
+SECRET_KEY = ZgJIlR5ZhB
 
 # Features
 
