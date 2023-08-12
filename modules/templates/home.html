@@ -8,7 +8,8 @@
       <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
         <div class="#">
           <div class="chart" style="display: flex; justify-content: center; align-items: center; height: 190px;">
-            <img class="chart-canvas" src="{{ course.image.url }}" height="200" width="300" alt="Course Image">
+            <a href="{% url 'modules:module_list' %}?course_name={{ course.group.name }}">{{ course.group.name }}
+            <img class="chart-canvas" src="{{ course.image.url }}" height="200" width="300" alt="Course Image"></a>
         </div>
       </div>
       </div>
