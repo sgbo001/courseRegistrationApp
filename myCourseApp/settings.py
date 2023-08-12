@@ -11,8 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-
-
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,15 +21,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-o5*+)0l)h-$fzbbksxhu8bpsva7$d0j-6p+oqh-c($25+p97iv'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'ZgJIlR5ZhB')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['c2063081.azurewebsites.net']
-CSRF_TRUSTED_ORIGINS = ['https://c2063081.azurewebsites.net']
-
-
+# CSRF_TRUSTED_ORIGINS = ['https://c2063081.azurewebsites.net']
+WEBSITE_HOSTNAME = os.environ.get('WEBSITE_HOSTNAME', None)
+DEBUG = WEBSITE_HOSTNAME == None
+if DEBUG:
+    ALLOWED_HOSTS = []
+else:
+    ALLOWED_HOSTS = [WEBSITE_HOSTNAME]
+    CSRF_TRUSTED_ORIGINS = [f'https://{WEBSITE_HOSTNAME}']
 # Application definition
 
 INSTALLED_APPS = [
@@ -84,18 +85,14 @@ WSGI_APPLICATION = 'myCourseApp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'moduleapp',
-        'USER': 'c2063081',     
-        'PASSWORD': 'June0620@', 
-        'HOST': 'c2063081.mysql.database.azure.com',  
-        'PORT': '3306',                
-        'OPTIONS': {
-            'ssl': {
-                'ca': 'DigiCertGlobalRootCA.crt.pem',  # Path to your CA certificate file
-            },
-        },
+        'NAME': os.environ['AZURE_DB_NAME'],
+        'HOST': os.environ['AZURE_DB_HOST'],
+        'PORT': os.environ['AZURE_DB_PORT'],
+        'USER': os.environ['AZURE_DB_USER'],
+        'PASSWORD': os.environ['AZURE_DB_PASSWORD'],
     }
 }
+
 
 
 # Password validation
