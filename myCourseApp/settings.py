@@ -24,13 +24,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-o5*+)0l)h-$fzbbksxhu8bpsva7$d0j-6p+oqh-c($25+p97iv')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-WEBSITE_HOSTNAME = os.environ.get('https://c2063081.azurewebsites.net', None)
-DEBUG = WEBSITE_HOSTNAME == None
+WEBSITE_HOSTNAME = os.environ.get('WEBSITE_HOSTNAME', None)
+DEBUG = WEBSITE_HOSTNAME is None  # Corrected the condition
+
 if DEBUG:
     ALLOWED_HOSTS = []
 else:
     ALLOWED_HOSTS = [WEBSITE_HOSTNAME]
     CSRF_TRUSTED_ORIGINS = [f'https://{WEBSITE_HOSTNAME}']
+
 # Application definition
 
 INSTALLED_APPS = [
