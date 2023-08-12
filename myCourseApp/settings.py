@@ -88,6 +88,11 @@ DATABASES = {
         'PORT': os.environ['AZURE_DB_PORT'],
         'USER': os.environ['AZURE_DB_USER'],
         'PASSWORD': os.environ['AZURE_DB_PASSWORD'],
+        'OPTIONS': {
+            'ssl': {
+                'ca': 'DigiCertGlobalRootCA.crt.pem',  # Path to your CA certificate file
+            },
+        },
     }
 }
 
