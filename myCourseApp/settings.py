@@ -21,17 +21,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'ZgJIlR5ZhB')
+SECRET_KEY = 'django-insecure-o5*+)0l)h-$fzbbksxhu8bpsva7$d0j-6p+oqh-c($25+p97iv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# CSRF_TRUSTED_ORIGINS = ['https://c2063081.azurewebsites.net']
-WEBSITE_HOSTNAME = os.environ.get('WEBSITE_HOSTNAME', None)
-DEBUG = WEBSITE_HOSTNAME == None
-if DEBUG:
-    ALLOWED_HOSTS = []
-else:
-    ALLOWED_HOSTS = [WEBSITE_HOSTNAME]
-    CSRF_TRUSTED_ORIGINS = [f'https://{WEBSITE_HOSTNAME}']
+DEBUG = True
+
+ALLOWED_HOSTS = ['c2063081.azurewebsites.net']
+CSRF_TRUSTED_ORIGINS = ['https://c2063081.azurewebsites.net']
+
+
 # Application definition
 
 INSTALLED_APPS = [
