@@ -160,7 +160,8 @@ def register_module(request, module_code):
         
         # Redirect to the module detail page or any other desired page
         messages.success(request, f'You have registered for this module successfully')
-        return redirect('modules:my_module')  # Replace 'my_module' with the appropriate URL name
+        # Redirect back to the same page
+        return redirect(request.META['HTTP_REFERER'])
 
     except (Module.DoesNotExist, Course.DoesNotExist):
         # Handle the case when the module or course does not exist
@@ -178,8 +179,7 @@ def unregister_module(request, module_code):
         # Delete the registered user
         registered_user.delete()
         messages.warning(request, f'You have un-registered from this module')
-        # Redirect to the module detail page or any other desired page
-        return redirect('modules:my_module')  # Replace 'my_module' with the appropriate URL name
+        return redirect(request.META['HTTP_REFERER'])
 
     except (Module.DoesNotExist, RegisteredUser.DoesNotExist):
         # Handle the case when the module or registered user does not exist
