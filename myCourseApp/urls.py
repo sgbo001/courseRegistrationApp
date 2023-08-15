@@ -6,7 +6,7 @@ from users import views as user_views
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
-from modules.views import course_list, generate_report
+from modules.views import course_list, generate_report, book_api
 
 
 urlpatterns = [
@@ -20,7 +20,8 @@ urlpatterns = [
     path('profile/edit/', user_views.edit_profile, name='edit_profile'),
     path('courses/', include('modules.urls')),
     path('password-reset/', user_views.password_reset_view, name='password_reset'),
-    path('generate-report/', generate_report, name='generate_report')
+    path('generate-report/', generate_report, name='generate_report'),
+    path('book_api/', book_api, name='book_api'),
 
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 

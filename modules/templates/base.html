@@ -86,6 +86,14 @@
     <!-- Render appropriate content for unauthenticated users -->
     {% endif %}
 </li>
+<li class="nav-item">
+  <a class="nav-link {% if request.resolver_match.url_name == 'book_api' %}text-white active bg-gradient-primary{% else %}text-white{% endif %}" href="{% url 'book_api' %}">
+    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+      <i class="material-icons opacity-10">receipt_long</i>
+    </div>
+    <span class="nav-link-text ms-1">E-Library</span>
+  </a>
+</li>
         <li class="nav-item">
           {%if user.is_authenticated%}
           <a class="nav-link text-white "href="{% url 'logout' %}">

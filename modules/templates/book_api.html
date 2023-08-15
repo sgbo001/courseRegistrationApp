@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .course-module {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: #f5f5f5;
+      }
+      
+      .course-module h3 {
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 0;
+        margin-bottom: 5px;
+      }
+      
+      .course-module p {
+        font-size: 14px;
+        margin: 0;
+      }
+      
+      .course-module .description {
+        font-style: italic;
+      }
+      
+      .course-module .courses {
+        font-weight: bold;
+        margin-top: 10px;
+      }
+      
+      .course-module .course-list {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+      }
+      
+      .course-module .course-list li {
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+      
+      .course-module .course-list li:before {
+        content: "\2022";
+        color: #555;
+        display: inline-block;
+        width: 1em;
+        margin-left: -1em;
+      }
+</style>
+<h4>Browse Library Material in Computing</h4>
+{% for learning in page_obj %}
+<div class="course-module">
+  <p><strong>Title:</strong> {{ learning.title }}</p>
+  <p><strong>Subject Tags:</strong> {{ learning.subject_tags }}</p>
+  <p><strong>Authors:</strong> {{ learning.authors }}</p>
+  <p><strong>Summary:</strong> {{ learning.summary }}</p>
+  <p><strong>Canonical ISBN:</strong> {{ learning.canonical_isbn }}</p>
+  <!-- Display the attachment link if available -->
+  {% if learning.files.url %}
+  <p><strong>Attachment:</strong> <a style="color: blue;" href="{{ learning.files.url }}">{{ learning.files.name }}</a></p>
+  {% endif %}
+  <p class="description"><strong>Description:</strong> {{ learning.description }}</p>
+</div>
+{% endfor %}
+
+<!-- Pagination links -->
+<div class="pagination">
+  <span class="step-links">
+    {% if page_obj.has_previous %}
+      <a href="?page=1">&laquo; first</a>
+      <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+    {% endif %}
+
+    <span class="current-page">{{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</span>
+
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}">next</a>
+      <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+    {% endif %}
+  </span>
+</div>
+{% endblock %}
