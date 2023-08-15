@@ -10,9 +10,11 @@ Home Page : <https://c2063081.azurewebsites.net/>
 
 Admin Page : <https://c2063081.azurewebsites.net/admin/>
 
-Admin Username : c2063081
+Azure Function to generate report : <https://func-report-4.azurewebsites.net/api/report?> . This can also be acess via Generate Report navigation bar when logged in as super user.
 
-Password : newJune1234@
+Admin Username : admin
+
+Admin Password : password123@
 
 # Environment Variables
 
@@ -27,6 +29,20 @@ AZURE_DB_USER='c2063081'
 AZURE_DB_PASSWORD='June0620@'
 
 SECRET_KEY = ZgJIlR5ZhB
+
+
+# Models Implemented 
+
+Course : This model is reponsible for course registration
+
+Module : This model handles module registration
+
+RegisteredUser : This model handles registered user of a module
+
+Student : This model handles student profile
+
+Learning : This model handles learning material for each module
+
 
 # Features
 
@@ -54,6 +70,11 @@ Users are equipped with the capability to reset their passwords through secret k
 Enhanced Learning Model:
 The application incorporates a  learning model that showcases learning materials specific to modules in which a user is enrolled.
 
+Django REST API
+Book Finder API to find books by title, author, in Computing. This can be access when you clicked on "E-Library" on the navigation bar
+
+Azure Functions Functionality
+This functionality queries the Azure MySQL database to gather detailed information about each registered user, including their username, first name, last name, email address, the specific module they are registered for, registration date, and export to excel. This is triggered when user logged in as super user, and click generate report on the naviagation bar. By executing this Azure Function, Administrator can efficiently obtain a consolidated view of registered users, their associated modules, and the corresponding registration dates, streamlining data analysis and reporting processes.
 
 
 ## Installation
