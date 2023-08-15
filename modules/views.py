@@ -5,6 +5,7 @@ from django.contrib import messages
 from .forms import ContactForm
 from django.core.mail import send_mail
 from django.core.paginator import Paginator
+import requests
 
 def about(request):
     return render(request, 'about.html')
@@ -268,3 +269,31 @@ def search_course(request):
 def generate_report(request):
     # Redirect to the report generation URL
      return redirect("https://func-report-4.azurewebsites.net/api/report")
+
+@login_required
+def book_api(request):
+    url = "https://book-finder1.p.rapidapi.com/api/search"
+
+    querystring = {
+        "title": "Computer Science",
+        "categories": "Science & Technology",
+        "lexile_min": "1200",
+        "lexile_max": "1700",
+        "results_per_page": "25",
+        "page": request.GET.get('page', '1')  # Get the page number from the query parameter
+    }
+
+    headers = {
+        "X-RapidAPI-Key": "e9a521c560mshbad0d6311cdcf56p1a2c76jsna6eeec1a592e",
+        "X-RapidAPI-Host": "book-finder1.p.rapidapi.com"
+    }
+
+    response = requests.get(url, headers=headers, params=querystring)
+    data = response.json()
+
+    paginator = Paginator(data.get('results', []), 6)  # Set the items per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {'page_obj': page_obj}
+    return render(request, 'book_api.html', context)
