@@ -264,3 +264,7 @@ def search_course(request):
         courses = Course.objects.filter(group__name__icontains=query)
     
     return render(request, 'search_course.html', {'courses': courses, 'query': query})
+
+def generate_report(request):
+    # Redirect to the report generation URL
+     return redirect("https://func-report-4.azurewebsites.net/api/report")

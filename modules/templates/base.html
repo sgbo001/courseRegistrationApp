@@ -110,7 +110,18 @@
           {% else %}
           {% endif %}{% endif %}
         </li>
-     
+        <li class="nav-item">
+          {% if user.is_authenticated %}
+          {% if request.user.is_staff %}
+          <a id="generate-report-link" class="nav-link text-white " href="{% url 'generate_report' %}">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Generate Report</span>
+          </a>
+          {% else %}
+          {% endif %}{% endif %}
+        </li> 
       </ul>
 
     </div>
