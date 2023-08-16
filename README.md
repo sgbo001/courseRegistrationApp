@@ -12,6 +12,8 @@ Admin Page : <https://c2063081.azurewebsites.net/admin/>
 
 Azure Function to generate report : <https://func-report-4.azurewebsites.net/api/report?> . This can also be acess via Generate Report navigation bar when logged in as super user.
 
+Django REST API : <https://c2063081.azurewebsites.net/book_api/>. This can also be access via E-Library in Navigation bar
+
 Admin Username : admin
 
 Admin Password : password123@
